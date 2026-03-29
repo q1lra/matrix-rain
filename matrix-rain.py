@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Animated terminal number grid with dynamic randomization.
+A Matrix-inspired terminal rain effect
 """
 
 __author__ = "q1lra"

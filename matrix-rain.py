@@ -3,19 +3,13 @@
 A Matrix-inspired terminal rain effect
 """
 
-__author__ = "q1lra"
-__version__ = "1.0.0"
-
 import sys
 import tty
 import termios
 import select
 import random
 import time
-from rich.console import Console
-
-console = Console()
-
+import shutil
 
 def generate_grid(width: int, height: int):
     return [[random.randint(0, 9) for _ in range(width)] for _ in range(height)]
@@ -33,7 +27,7 @@ def random_color():
 
 
 def draw(grid):
-    sys.stdout.write("\033[H\n")  # move cursor to top
+    sys.stdout.write("\033[H\n")
 
     for i, row in enumerate(grid):
         line = "  " + "".join(
@@ -52,8 +46,9 @@ def update_grid(grid, width, height):
 
 
 def rain(speed: float = 0.08):
-    width = max((console.size.width - 4) // 2, 1)
-    height = max(console.size.height - 2, 1)
+    columns, lines = shutil.get_terminal_size()
+    width = max((columns - 4) // 2, 1)
+    height = max(lines - 2, 1)
 
     grid = generate_grid(width, height)
 
@@ -62,11 +57,10 @@ def rain(speed: float = 0.08):
     tty.setcbreak(fd)
 
     try:
-        console.clear()
-        sys.stdout.write("\033[?25l")  # hide cursor
+        sys.stdout.write("\033[2J\033[H")
+        sys.stdout.write("\033[?25l")
 
         while True:
-            # Exit on ENTER
             if select.select([sys.stdin], [], [], 0)[0]:
                 if sys.stdin.read(1) == "\n":
                     break
@@ -79,8 +73,8 @@ def rain(speed: float = 0.08):
 
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        sys.stdout.write("\033[?25h")  # show cursor
-        console.clear()
+        sys.stdout.write("\033[?25h")
+        sys.stdout.write("\033[2J\033[H")
 
 
 def main():
@@ -90,7 +84,7 @@ def main():
         try:
             speed = float(sys.argv[1])
         except ValueError:
-            console.print("[red]Invalid speed value, using default.[/red]")
+            print("\033[31mInvalid speed value, using default.\033[0m")
 
     rain(speed)
 
@@ -100,6 +94,5 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("\nExiting...")
-    except Exception:
-        console.print_exception(max_frames=20)
-        
+    except Exception as e:
+        print(f"Error: {e}")

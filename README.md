@@ -5,8 +5,5 @@
 ```bash
 git clone https://github.com/q1lra/matrix-rain.git
 cd matrix-rain
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
 python3 matrix-rain.py
 ```

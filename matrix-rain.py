@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-"""
-The Matrix digital rain simulation
-"""
 
 import sys
 import tty

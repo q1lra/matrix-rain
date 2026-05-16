@@ -15,5 +15,6 @@ cd matrix-rain
 python3 matrix-rain.py
 ```
 
+
 > [!NOTE]
 > Future plan: Rewrite in Go for cross-platform support, zero dependencies, and better performance.

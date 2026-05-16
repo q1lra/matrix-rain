@@ -8,6 +8,7 @@ import random
 import time
 import shutil
 
+
 def generate_grid(width: int, height: int):
     return [[random.randint(0, 9) for _ in range(width)] for _ in range(height)]
 

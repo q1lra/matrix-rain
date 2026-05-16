@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-A Matrix-inspired terminal rain effect
+The Matrix digital rain simulation
 """
 
 import sys
